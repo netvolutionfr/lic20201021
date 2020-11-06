@@ -17,6 +17,16 @@ const requestListener = function(req, res) {
         res.setHeader("Content-type", "application/json");
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.end(JSON.stringify(contacts));
+    } else if (req.method === 'POST') {
+        let body = '';
+        req.on('data', (d => {
+            body += d
+        }))
+        req.on('end', () => {
+            res.setHeader("Content-type", "text/html");
+            res.writeHead(200);
+            res.end(body);
+        })
     } else {
         fs.readFile('index.html')
             .then((contenu) => {
